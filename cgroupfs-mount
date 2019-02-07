@@ -3,9 +3,17 @@
 #           2014 Tianon Gravi
 # Author: Serge Hallyn <serge.hallyn@canonical.com>
 #         Tianon Gravi <tianon@debian.org>
-set -e
 
 # for simplicity this script provides no flexibility
+USERS_TMP=""
+for u in $UNPRIV_USERS
+do
+    id $u > /dev/null 2>&1
+    if [ $? = 0 ]; then
+	USERS_TMP="$USERS_TMP $u"
+    fi
+done
+UNPRIV_USERS=$USERS_TMP
 
 # if cgroup is mounted by fstab, don't run
 # don't get too smart - bail on any uncommented entry with 'cgroup' in it
