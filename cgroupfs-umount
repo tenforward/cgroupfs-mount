@@ -20,6 +20,9 @@ fi
 cd /sys/fs/cgroup
 
 for sys in *; do
+	if [ "$sys" = "elogind" ]; then
+		continue
+	fi
 	if mountpoint -q $sys; then
 		umount $sys
 	fi
